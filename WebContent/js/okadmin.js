@@ -147,9 +147,7 @@ layui.use(['element', 'layer', 'okUtils', 'okTab'], function () {
       title: "系统公告",
       btn: "我知道啦",
       btnAlign: 'c',
-      content: "ok-admin v2.0上线啦(^し^)<br />" +
-        "在此郑重承诺该模板<span style='color:#5cb85c'>永久免费</span>为大家提供" +
-        "<br />若有更好的建议欢迎<span id='noticeQQ'>加入QQ群</span>一起聊",
+      content:  "<span style='color:#5cb85c'>欢迎进入盐象后台管理系统</span>" ,
       yes: function(index){
         if (srcWidth > 800) {
           layer.tips('公告跑到这里去啦', '#notice', {

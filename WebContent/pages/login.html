@@ -62,7 +62,6 @@
       name: function(value) {
           var password = $("#password").val(); //获取旧名称值
            var obj={"auth":{"email":value, "password":password}};
-          console.log(obj);
           var jwt = "";
           $.ajax({
               type: "post",
@@ -71,6 +70,10 @@
               data:obj,
               success: function(result) {
                   jwt = result.jwt;   
+                  token=jwt;
+                  loginName=value;
+                  sessionStorage.setItem('token',token);
+                  sessionStorage.setItem('loginName',loginName);
               },
               error: function(error) {
                   layer.msg("登陆出错！");
@@ -84,7 +87,7 @@
 
     form.on('submit(login)', function (data) {
       layer.msg("登陆中...", {icon: 6, time: 1000, anim: 0}, function () {
-        window.location = "../index.html";
+         window.location = "../index.html";
       });
       return false;
     });
