@@ -4,7 +4,7 @@
     "fontFamily": "ok-icon",
     "icon": "&#xe901;",
     "href": "pages/home.html",
-    "isClose": false,
+    "isClose": true,
     "spread": true,
     "isCheck": true
   },
@@ -132,14 +132,14 @@
     "title": "会员管理",
     "icon": "&#xe66f;",
     "href": "",
-    "spread": false,
+    "spread": true,
     "children": [
       {
         "title": "用户列表",
         "fontFamily": "layui-icon",
         "icon": "&#xe61c;",
         "href": "pages/user/user.html",
-        "spread": false
+        "spread": true
       },
       {
         "title": "角色列表",

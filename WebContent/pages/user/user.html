@@ -79,20 +79,32 @@
 
         table.render({
             elem: '#tableId',
-            url: '../../data/user-list.json',
-            limit: 10,
+            url: 'http://39.108.15.198:3000/api/v1/admins',
+            method:'get',
+            where:{
+            	'pageno':1,
+            	'pageszie':10
+            },
+            headers:{
+            	"Authorization":
+                "Bearer " + sessionStorage.getItem("token")            	
+            },
+            response: {
+              statusName: 'status' //规定数据状态的字段名称，默认：code
+              ,statusCode: "ok" //规定成功的状态码，默认：0
+              ,msgName: 'message' //规定状态信息的字段名称，默认：msg
+              ,countName: 'total' //规定数据总数的字段名称，默认：count
+              ,dataName: 'admins' //规定数据列表的字段名称，默认：data
+            } ,
             page: true,
             cols: [[
                 {type: 'checkbox'},
                 {field: 'id', title: 'ID', width: 80, sort: true},
-                {field: 'username', title: '用户名', width: 100},
+                {field: 'account', title: '用户名', width: 100},
                 {field: 'name', title: '姓名', width: 100},
-                {field: 'password', title: '密码', width: 100},
-                {field: 'status', title: '状态', width: 85, templet: '#statusTpl'},
-                {field: 'role', title: '角色', width: 100, templet: '#roleTpl'},
-                {field: 'email', title: '邮箱', width: 200},
-                {field: 'createTime', title: '创建时间', width: 200},
-                {field: 'logins', title: '登陆次数', width: 100},
+                {field: 'staus', title: '状态', width: 100},
+                {field: 'ip', title: 'IP', width: 85},
+                {field: 'login_time', title: '登陆时间', width: 100},
                 {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {

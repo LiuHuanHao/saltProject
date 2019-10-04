@@ -1,6 +1,4 @@
 /** layui-v2.5.4 MIT License By https://www.layui.com */
-var token="";
-var loginName="";
 if (!Object.assign) {
   Object.defineProperty(Object, "assign", {
     enumerable: false,
