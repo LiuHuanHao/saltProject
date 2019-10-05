@@ -156,6 +156,33 @@
     ]
   },
   {
+    "title": "商户管理",
+    "icon": "&#xe66f;",
+    "href": "",
+    "spread": true,
+    "children": [
+      {
+        "title": "商户列表",
+        "fontFamily": "layui-icon",
+        "icon": "&#xe61c;",
+        "href": "pages/business/user.html",
+        "spread": true
+      },
+      {
+        "title": "角色列表",
+        "icon": "&#xe60a;",
+        "href": "pages/role/role.html",
+        "spread": false
+      },
+      {
+        "title": "权限列表",
+        "icon": "&#xe642;",
+        "href": "pages/permission/permission.html",
+        "spread": false
+      }
+    ]
+  },
+  {
     "title": "新闻管理",
     "icon": "&#xe705;",
     "href": "",
