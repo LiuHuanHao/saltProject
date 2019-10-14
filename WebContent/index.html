@@ -161,6 +161,7 @@ layui.config({
     	            "Bearer " + sessionStorage.getItem("token")            	
     	        },
     		    complete: function(xhr, textStatus) {
+    		    	console.log(sessionStorage.getItem("token")    )
     		        console.log("xhr.status:"+xhr.status);
     		        if(xhr.status==401){
     		        	console.log("401");

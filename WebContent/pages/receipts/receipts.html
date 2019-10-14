@@ -79,7 +79,7 @@
 
         table.render({
             elem: '#tableId',
-            url: 'http://39.108.15.198:3000/api/v1/certification',
+            url: 'http://39.108.15.198:3000/api/v1/receipts',
             method:'get',
             where:{
             	'pageno':1,
@@ -94,23 +94,27 @@
               ,statusCode: "ok" //规定成功的状态码，默认：0
               ,msgName: 'message' //规定状态信息的字段名称，默认：msg
               ,countName: 'total' //规定数据总数的字段名称，默认：count
-              ,dataName: 'certs' //规定数据列表的字段名称，默认：data
+              ,dataName: 'receipts' //规定数据列表的字段名称，默认：data
             } ,
             page: true,
             cols: [[
                 {type: 'checkbox'},
-                {field: 'cert_id', title: '认证id', width: 100, sort: true},
-                {field: 'user_id', title: '申请人id', width: 100},
-                {field: 'user_name', title: '申请人名字', width: 168},
-                {field: 'merchant_id', title: '商户id', width: 100},
-                {field: 'merchant_name', title: '商户名', width: 155},
-                {field: 'phone', title: '联系电话', width: 100},
-                {field: 'created_at', title: '创建时间', width: 180},
-                {field: 'audit_type', title: '审核类型', width: 150},
-                {field: 'audit_status', title: '审核状态', width: 150},
+               /*  {field: 'receipt_id', title: '收款资质id', width: 120, sort: true},
+                {field: 'user_id', title: '申请人id', width: 100}, */
+                {field: 'enterprise_name', title: '企业名称', width: 100},
+                {field: 'legal_person', title: '企业法人', width: 100},
+                {field: 'receipt_type', title: '收款类型', width: 100},
+                {field: 'corporate_account', title: '银行卡号', width: 120},
+                {field: 'receipt_name', title: '收款人姓名', width: 100},
+                {field: 'bank', title: '所属银行', width: 150},
+                {field: 'bank_address', title: '开户行', width: 150},
+                {field: 'contact_name', title: '联系人', width: 100},
+                {field: 'created_at', title: '提交时间', width: 170},
+                {field: 'status', title: '认证状态', width: 100},
                 {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
+            	console.log("status:"+res.status);
                 $("#countNum").text(count);
             }
         });
@@ -134,11 +138,10 @@
                     content: 'user-edit.html',
                     zIndex: layer.zIndex,
                     success: function(layero, index){
-                    	var id=data.cert_id;
-                    	var merchant_id=data.merchant_id;
+                    	var id=data.receipt_id;
                     	if(id!=null && id!=undefined && id!=""){
                     		$.ajax({
-                    	        url: "http://39.108.15.198:3000/api/v1/certification/detail?cert_id="+id,
+                    	        url: "http://39.108.15.198:3000/api/v1/receipts/detail?receipt_id="+id,
                     	        type: "get",
                     	        headers:{
                                 	"Authorization":
@@ -147,11 +150,12 @@
                     	        success: function(result){
                     	            if(result.status=="ok"){
 					                        var body = layui.layer.getChildFrame('body', index);
-					                        body.find("#contact_name").val(result.contact_name); 
-					                        body.find("#contact_phone").val(result.contact_phone); 
+					                        body.find("#enterprise_name").val(result.enterprise_name); 
+					                        body.find("#legal_person").val(result.legal_person); 
+					                        body.find("#idcardfront").attr("src",result.idcardfront); 
+					                        body.find("#idcardback").attr("src",result.idcardback); 
 					                        body.find("#business_license_url").attr("src",result.business_license_url); 
-					                        body.find("#account_license_url").attr("src",result.account_license_url); 
-					                        body.find("#health_license_url").attr("src",result.health_license_url); 
+					                        body.find("#health_license").attr("src",result.health_license); 
 					                        body.find("#merchant_id").val(merchant_id); 
 					                       /*  console.log("result.other_liceses_url:-----"+result.other_liceses_url);
 					                        if(result.other_licenses_url.length>0){
