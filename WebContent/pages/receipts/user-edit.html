@@ -25,139 +25,87 @@
     </div>
     <!--form表单-->
     <form class="layui-form ok-form">
-        <!-- <div class="layui-form-item">
-            <label class="layui-form-label">认证id</label>
-            <div class="layui-input-block">
-                <input type="text" name="cert_id" id="cert_id" placeholder="请输入认证id" disabled="disabled" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">申请人id</label>
-            <div class="layui-input-block">
-                <input type="text" name="user_id"  id="user_id"  disabled="disabled"  placeholder="请输入申请人id" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
-        </div> -->
+
          <div class="layui-form-item">
             <label class="layui-form-label">企业主体</label>
             <div class="layui-input-block">
                 <input type="text" name="enterprise_name"  id="enterprise_name"  placeholder="请输入企业主体" autocomplete="off" class="layui-input"> <!-- lay-verify="required"  -->
-                <input type="hidden" name="merchant_id"  id="merchant_id"  > <!-- lay-verify="required"  -->
+                <input type="hidden" name="receipt_id"  id="receipt_id"  >
             </div>
         </div>
-       <!--   <div class="layui-form-item">
-            <label class="layui-form-label">商户id</label>
-            <div class="layui-input-block">
-                <input type="text" name="merchant_id"  id="merchant_id"  disabled="disabled"  placeholder="请输入商户id" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
-        </div> -->
-        <!-- <div class="layui-form-item">
-            <label class="layui-form-label">商户名</label>
-            <div class="layui-input-block">
-                <input type="text" name="merchant_name" id="merchant_name" placeholder="请输入商户名" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
-        </div> -->
+        
         <div class="layui-form-item">
             <label class="layui-form-label">法人姓名</label>
             <div class="layui-input-block">
                 <input type="text" name="legal_person"  id="legal_person"  placeholder="请输入法人姓名" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
             </div>
         </div>
+        
          <div class="layui-form-item">
-            <label class="layui-form-label">身份证正面</label>
+            <label class="layui-form-label">对公账号</label>
             <div class="layui-input-block">
-               	<img alt="身份证正面" src="" height="500px" id="idcardfront">
+                <input type="text" name="corporate_account"  id="corporate_account"  placeholder="请输入对公账号" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
             </div>
         </div>
+        
         <div class="layui-form-item">
-            <label class="layui-form-label">身份证反面</label>
+            <label class="layui-form-label">银行名称</label>
             <div class="layui-input-block">
-               	<img alt="身份证反面"  src=""  height="500px" id="idcardback">
-            </div>
-        </div>
-         <div class="layui-form-item">
-            <label class="layui-form-label">营业执照</label>
-            <div class="layui-input-block">
-               	<img alt="营业执照"  src=""  height="500px" id="business_license_url">
+                <input type="text" name="bank_name"  id="bank_name"  placeholder="请输入银行名称" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
             </div>
         </div>
         
-         <div class="layui-form-item">
-            <label class="layui-form-label">卫生许可证</label>
-            <div class="layui-input-block">
-               	<img alt="卫生许可证"  src=""  height="500px" id="health_license">
-            </div>
-        </div>
-        
-        <!--  <div class="layui-form-item" id="otherPics">
-            <label class="layui-form-label">其他图片</label>
-        </div> -->
-        
-       <!--  <div class="layui-form-item">
-            <label class="layui-form-label">邮箱</label>
-            <div class="layui-input-block">
-                <input type="text" name="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input" lay-verify="email">
-            </div>
-        </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
+            <label class="layui-form-label">开户行</label>
             <div class="layui-input-block">
-                <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
-        </div> -->
-       <!--  <div class="layui-form-item">
-            <label class="layui-form-label">创建时间</label>
-            <div class="layui-input-block">
-                <input type="text" name="created_at" placeholder="请选择创建时间 格式为yyyy-MM-dd HH:mm:ss" autocomplete="off" class="layui-input" id="created_at" lay-verify="birthdayVerify">
-            </div>
-        </div> -->
-         <!-- <div class="layui-form-item">
-            <label class="layui-form-label">审核类型</label>
-            <div class="layui-input-block">
-                <input type="text" name="audit_type" id="audit_type" placeholder="请输入审核类型" autocomplete="off" class="layui-input" >
+                <input type="text" name="bank_address"  id="bank_address"  placeholder="请输入开户行" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
             </div>
         </div>
-          <div class="layui-form-item">
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系人</label>
+            <div class="layui-input-block">
+                <input type="text" name="contact_name"  id="contact_name"  placeholder="请输入联系人" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="contact_phone"  id="contact_phone"  placeholder="请输入联系电话" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
+            </div>
+        </div>
+        
+         <div class="layui-form-item">
             <label class="layui-form-label">审核状态</label>
             <div class="layui-input-block">
-                <input type="text" name="audit_status" id="audit_status" placeholder="请输入审核状态" autocomplete="off" class="layui-input" >
-            </div>
-        </div> -->
-       <!--  <div class="layui-form-item">
-            <label class="layui-form-label">角色</label>
-            <div class="layui-input-block">
-                <select name="role">
-                    <option value="0">管理员</option>
-                    <option value="1">普通用户</option>
-                </select>
-            </div>
-        </div> -->
-      <!--   <div class="layui-form-item">
-            <label class="layui-form-label">兴趣</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="like[write]" value="1" title="写作">
-                <input type="checkbox" name="like[read]" value="2" title="阅读">
-                <input type="checkbox" name="like[run]" value="3" title="运动">
+                <input type="text" name="bank_status"  id="bank_status"  placeholder="请输入联系电话" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="status" lay-skin="switch" lay-text="启用|停用" checked value="0">
+        
+         <div class="layui-form-item">
+            <label class="layui-form-label">身份证正面</label>
+            <div class="layui-input-inline">
+               	<img alt="身份证正面" src="" height="200px" width="200px" id="idcardfront">
+            </div>
+            <label class="layui-form-label">身份证反面</label>
+            <div class="layui-input-inline">
+               	<img alt="身份证反面"  src=""  height="200px" width="200px" id="idcardback">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">性别</label>
-            <div class="layui-input-block">
-                <input type="radio" name="sex" value="0" title="男">
-                <input type="radio" name="sex" value="1" title="女" checked>
+
+         <div class="layui-form-item">
+            <label class="layui-form-label">营业执照</label>
+            <div class="layui-input-inline">
+               	<img alt="营业执照"  src="" height="200px" width="200px"  id="business_license_url">
+            </div>
+            <label class="layui-form-label">卫生许可证</label>
+            <div class="layui-input-inline">
+               	<img alt="卫生许可证"  src=""  height="200px" width="200px" id="health_license">
             </div>
         </div>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">备注</label>
-            <div class="layui-input-block">
-                <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
-            </div>
-        </div> -->
+        
+      
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="edit">审核通过</button>
@@ -187,7 +135,6 @@
         });
 
         form.on('submit(edit)', function (data) {
-        	 
 		        	/* //例子2
 		        	layer.prompt({
 		        	  formType: 2,
@@ -198,25 +145,29 @@
 		        	  alert(value); //得到value
 		        	  layer.close(index);
 		        	}); */
-           		   console.log(data.field.merchant_id);
-           		   var id=data.field.merchant_id;
+           		   var id=data.field.receipt_id;
 	           		$.ajax({
-	        		    url: "http://39.108.15.198:3000/api/v1/certification/pass",
+	        		    url: "http://39.108.15.198:3000/api/v1/receipts/pass",
 	        		    type: "put",
 	        	        headers:{
 	        	        	"Authorization":
 	        	            "Bearer " + sessionStorage.getItem("token")            	
 	        	        },
 	        	        data:{
-                        	"merchant_id":id
+                        	"receipt_id":id
                         },
                         success: function(result){
             	            if(result.status=="ok"){
-						           layer.msg("审核成功！", {icon: 6, time: 1000, anim: 4}, function () {
+						           layer.msg("审核通过！", {icon: 6, time: 1000, anim: 4}, function () {
 						               parent.layer.close(parent.layer.getFrameIndex(window.name));
 						           });
             	            }
-            	        }
+            	        },
+            	        complete: function(xhr, textStatus) {
+            		        if(xhr.status==400){
+            		        	 layer.msg("已经审核完成！");
+            		        }
+            		    } 
 	        		});
            		
             return false;

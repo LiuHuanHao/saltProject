@@ -111,6 +111,7 @@
                 {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
+            	console.log("res.status:"+res.status)
                 $("#countNum").text(count);
             }
         });
@@ -153,14 +154,6 @@
 					                        body.find("#account_license_url").attr("src",result.account_license_url); 
 					                        body.find("#health_license_url").attr("src",result.health_license_url); 
 					                        body.find("#merchant_id").val(merchant_id); 
-					                       /*  console.log("result.other_liceses_url:-----"+result.other_liceses_url);
-					                        if(result.other_licenses_url.length>0){
-					                        	for(var i=0;i<result.other_licenses_url.length;i++){
-					                        			console.log("i---"+i);
-							                            body.find("#health_license_url").html().append("<div class='layui-input-block'>"+
-							                            "img alt='卫生许可证'  src=''  height='500px' ></div>")
-					                        	}
-					                        }  */
                     	            }
                     	        }
                     	    });
