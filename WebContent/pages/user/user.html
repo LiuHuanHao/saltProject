@@ -103,8 +103,8 @@
                 {field: 'account', title: '用户名', width: 100},
                 {field: 'name', title: '姓名', width: 100},
                 {field: 'staus', title: '状态', width: 100},
-                {field: 'ip', title: 'IP', width: 85},
-                {field: 'login_time', title: '登陆时间', width: 100},
+                {field: 'ip', title: 'IP', width: 160},
+                {field: 'login_time', title: '登陆时间', width: 180},
                 {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
@@ -130,8 +130,18 @@
                     area: ['90%', '90%'],
                     content: 'user-edit.html',
                     zIndex: layer.zIndex,
+                    success: function(layero, index){
+                    	var id=data.id;
+                    	var account=data.account;
+                    	var name=data.name;
+                    	console.log("id:"+id);
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find("#id").val(id); 
+                        body.find("#account").val(account); 
+                        body.find("#name").val(name); 
+                    },
                     end: function () {
-                        $(".layui-laypage-btn")[0].click();
+                    	window.location.reload();
                     }
                 });
             } else if (layEvent === 'del') {
