@@ -26,21 +26,27 @@
     <!--form表单-->
     <form class="layui-form layui-form-pane ok-form">
         <div class="layui-form-item">
-            <label class="layui-form-label">用户名</label>
+            <label class="layui-form-label">登陆账号</label>
             <div class="layui-input-block">
-                <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="account" placeholder="请输入登陆账号" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">真实姓名</label>
+            <label class="layui-form-label">登陆密码</label>
             <div class="layui-input-block">
-                <input type="text" name="reallyName" placeholder="请输入真实姓名" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="password" placeholder="请输入登陆密码" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">手机号码</label>
+            <label class="layui-form-label">账号姓名</label>
             <div class="layui-input-block">
-                <input type="text" name="phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input" lay-verify="phone">
+                <input type="text" name="name" placeholder="请输入账号姓名" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+   <!--      <div class="layui-form-item">
+            <label class="layui-form-label">账号姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" placeholder="请输入账号姓名" autocomplete="off" class="layui-input" > lay-verify="phone"
             </div>
         </div>
         <div class="layui-form-item">
@@ -96,7 +102,7 @@
             <div class="layui-input-block">
                 <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
             </div>
-        </div>
+        </div> -->
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="add">立即提交</button>
@@ -125,11 +131,44 @@
         });
 
         form.on('submit(add)', function (data) {
-            console.log(data.field);
-            layer.msg("添加成功！", {icon: 6, time: 1000, anim: 4}, function () {
-                parent.layer.close(parent.layer.getFrameIndex(window.name));
-            });
-            return false;
+        	var id=data.field.id;
+    	 	var account=data.field.account;
+    	 	var name=data.field.name;
+    	 	var password=data.field.password;
+    	 	var data={};
+    	 	data.account=account;
+    	 	data.name=name;
+    	 	data.password=password;
+    		$.ajax({
+ 		    url: "http://39.108.15.198:3000/api/v1/admins",
+ 		    type: "post",
+ 	        headers:{
+ 	        	"Authorization":
+ 	            "Bearer " + sessionStorage.getItem("token")            	
+ 	        },
+ 	        data:data,
+             success: function(result){
+            	 console.log("成功！")
+            
+ 	            if(result.status=="ok"){
+				           layer.msg("添加成功！", {icon: 6, time: 1000, anim: 4}, function () {
+				               parent.layer.close(parent.layer.getFrameIndex(window.name));
+				           });
+ 	            }
+ 	         /*   if(result.status=="103"){
+		           layer.msg(result.message, {icon: 6, time: 1000, anim: 4}, function () {
+		               parent.layer.close(parent.layer.getFrameIndex(window.name));
+		           }); */
+         
+ 	        },
+ 	        complete: function(xhr, textStatus) {
+ 		        if(xhr.status==400){
+ 		        	 layer.msg("请求出错！");
+ 		        }
+ 		    } 
+ 		}); 
+		
+	 return false;
         });
     })
 </script>

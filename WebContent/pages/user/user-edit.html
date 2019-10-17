@@ -42,7 +42,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">登陆密码</label>
             <div class="layui-input-block">
-                <input type="password" name="password"  id="password"  placeholder="请输入登陆密码" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
+                <input type="text" name="password"  id="password"  placeholder="请输入登陆密码" autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
             </div>
         </div>
         
@@ -63,7 +63,7 @@
         var form = layui.form;
         var $ = layui.jquery;
         var laydate = layui.laydate;
-
+       
         laydate.render({
             elem: '#birthday',
             type: "datetime"
@@ -78,8 +78,12 @@
         	 	var account=data.field.account;
         	 	var name=data.field.name;
         	 	var password=data.field.password;
-        	 	console.log("id:"+data.field.id)
-        	 	console.log("account:"+data.field.account)
+        	 	var data={};
+        	 	data.account=account;
+        	 	data.name=name;
+        	 	if(password!=null && password!=undefined && password!=""){
+        	 		data.password=password;
+        	 	}
         		$.ajax({
      		    url: "http://39.108.15.198:3000/api/v1/admins/"+id,
      		    type: "put",
@@ -87,11 +91,7 @@
      	        	"Authorization":
      	            "Bearer " + sessionStorage.getItem("token")            	
      	        },
-     	        data:{
-                 	"account":account,
-                 	"name":name,
-                 	"password":password
-                 },
+     	        data:data,
                  success: function(result){
      	            if(result.status=="ok"){
 					           layer.msg("修改成功！", {icon: 6, time: 1000, anim: 4}, function () {
@@ -101,10 +101,10 @@
      	        },
      	        complete: function(xhr, textStatus) {
      		        if(xhr.status==400){
-     		        	 layer.msg("已经审核完成！");
+     		        	 layer.msg("请求出错！");
      		        }
      		    } 
-     		});
+     		}); 
     		
     	 return false;
         });
