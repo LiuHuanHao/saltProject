@@ -49,6 +49,7 @@
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="edit">修改</button>
+                  <button class="layui-btn" lay-submit lay-filter="openOfficial">开启高阶权限</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -105,9 +106,34 @@
      		        }
      		    } 
      		}); 
-    		
     	 return false;
         });
+        
+        form.on('submit(openOfficial)', function (data) {
+    	 		var id=data.field.id;
+	    		$.ajax({
+	 		    url: "http://39.108.15.198:3000/api/v1/admin_users/official",
+	 		    type: "put",
+	 	        headers:{
+	 	        	"Authorization":
+	 	            "Bearer " + sessionStorage.getItem("token")            	
+	 	        },
+	 	        data:{id:id},
+	            success: function(result){
+	 	            if(result.status=="ok"){
+					           layer.msg("成功开启商家高阶权限！", {icon: 6, time: 1000, anim: 4}, function () {
+					               parent.layer.close(parent.layer.getFrameIndex(window.name));
+					           });
+	 	            }
+	 	        },
+	 	        complete: function(xhr, textStatus) {
+	 		        if(xhr.status==400){
+	 		        	 layer.msg("不存在这条记录！");
+	 		        }
+	 		    } 
+	 		}); 
+		 return false;
+	    });
     })
 </script>
 </body>

@@ -156,10 +156,17 @@
     "spread": true,
     "children": [
       {
-        "title": "商户列表",
+        "title": "店铺认证列表",
         "fontFamily": "layui-icon",
         "icon": "&#xe61c;",
         "href": "pages/business/user.html",
+        "spread": true
+      },
+      {
+        "title": "商家列表",
+        "fontFamily": "layui-icon",
+        "icon": "&#xe61c;",
+        "href": "pages/vendor/vendor.html",
         "spread": true
       },
       {
