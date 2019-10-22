@@ -135,6 +135,13 @@
     "spread": true,
     "children": [
       {
+        "title": "账户列表",
+        "fontFamily": "layui-icon",
+        "icon": "&#xe61c;",
+        "href": "pages/account/user.html",
+        "spread": true
+      },
+      {
         "title": "用户列表",
         "fontFamily": "layui-icon",
         "icon": "&#xe61c;",

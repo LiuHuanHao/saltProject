@@ -79,7 +79,7 @@
 
         table.render({
             elem: '#tableId',
-            url: 'http://39.108.15.198:3000/api/v1/admin_users',
+            url: 'http://39.108.15.198:3000/api/v1/admins',
             method:'get',
             where:{
             	'pageno':1,
@@ -94,22 +94,17 @@
               ,statusCode: "ok" //规定成功的状态码，默认：0
               ,msgName: 'message' //规定状态信息的字段名称，默认：msg
               ,countName: 'total' //规定数据总数的字段名称，默认：count
-              ,dataName: 'users' //规定数据列表的字段名称，默认：data
+              ,dataName: 'admins' //规定数据列表的字段名称，默认：data
             } ,
             page: true,
             cols: [[
                 {type: 'checkbox'},
                 {field: 'id', title: 'ID', width: 80, sort: true},
-                {field: 'name', title: '用户名', width: 100},
-                {field: 'gender', title: '性别', width: 80},
-                {field: 'phone', title: '手机号码', width: 200},
-                {field: 'created_at', title: '创建时间', width: 200},
-                {field: 'intergral', title: '积分', width: 80},
-                {field: 'balance', title: '账户余额', width: 100},
-                {field: 'follower', title: '关注数', width: 80},
-                {field: 'fans', title: '粉丝数', width: 80},
-                {field: 'permission', title: '用户权限', width: 100},
-                {field: 'status', title: '用户状态', width: 100},
+                {field: 'account', title: '用户名', width: 100},
+                {field: 'name', title: '姓名', width: 150},
+                {field: 'staus', title: '状态', width: 100},
+                {field: 'ip', title: 'IP', width: 160},
+                {field: 'login_time', title: '登陆时间', width: 180},
                 {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
@@ -149,36 +144,9 @@
                      }
                  });
             } else if (layEvent === 'del') {
-			            	layer.confirm('是否开启高阶权限!', {
-			                    btn: ['确定', '取消']
-			                }, function (index, layero) {
-			                    //移除元素
-			               //     $("#tr" + id).remove();
-			                    //无法关闭这个消息框
-			                    $.ajax({
-							 		    url: "http://39.108.15.198:3000/api/v1/admin_users/official",
-							 		    type: "put",
-							 	        headers:{
-							 	        	"Authorization":
-							 	            "Bearer " + sessionStorage.getItem("token")            	
-							 	        },
-							 	        data:{id:data.id},
-							            success: function(result){
-							 	            if(result.status=="ok"){
-											           layer.msg("成功开启商家高阶权限！", {icon: 6, time: 1000, anim: 4}, function () {
-											        //	   	layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
-											           });
-							 	            }
-							 	        },
-							 	        complete: function(xhr, textStatus) {
-							 		        if(xhr.status==400){
-							 		        	 layer.msg("不存在这条记录！");
-							 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
-							 		        }
-							 		    } 
-							 		}); 
-			                }
-			      );
+                layer.confirm("确定要删除吗？", {skin: 'layui-layer-lan', icon: 2, title: '提示', anim: 6}, function () {
+                    layer.msg("操作成功！", {icon: 1, time: 1000});
+                });
             }
         });
 
@@ -276,7 +244,7 @@
 </script>
 <script type="text/html" id="operationTpl">
     <a href="javascript:;" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
-    <a href="javascript:;"  title="开启高阶权限" lay-event="del"><i class="layui-icon" >&#xe604;</i></a>
+    <a href="javascript:;" title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
 </script>
 </body>
 </html>
