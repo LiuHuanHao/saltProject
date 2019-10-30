@@ -109,7 +109,7 @@
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="edit">审核通过</button>
-                <button class="layui-btn" lay-submit lay-filter="edit">审核驳回</button>
+                <button class="layui-btn" lay-submit lay-filter="overrule">审核驳回</button>
                 <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button> -->
             </div>
         </div>
@@ -134,6 +134,44 @@
             birthdayVerify: [/^((((1[6-9]|[2-9]\d)\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\d|3[01]))|(((1[6-9]|[2-9]\d)\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\d|30))|(((1[6-9]|[2-9]\d)\d{2})-0?2-(0?[1-9]|1\d|2[0-8]))|(((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))(\s(([01]\d{1})|(2[0123])):([0-5]\d):([0-5]\d))?$/, '日期格式不正确']
         });
 
+        form.on('submit(overrule)', function (data) {
+	   		var id=data.field.receipt_id;
+	   		var str = 
+               " <textarea name='remarks' id='remarks' placeholder='请输入驳回意见..' class='layui-textarea'></textarea> ";
+	        layer.confirm(str, {btn: ['驳回', '取消'], title: "审核驳回"}, function () {
+	            var remarks = $("#remarks").val();
+	            if (remarks == null || remarks == undefined || remarks=='') {
+	                layer.msg('请输入驳回意见！', {icon: 2});
+	            }
+	            $.ajax({
+        		    url:"http://39.108.15.198:3000/api/v1/receipts/overrule";
+        		    type: "put",
+        	        headers:{
+        	        	"Authorization":
+        	            "Bearer " + sessionStorage.getItem("token")            	
+        	        },
+        	        data:{
+                    	"receipt_id":id,
+                    	'reason':remarks
+                    },
+                    success: function(result){
+        	            if(result.status=="ok"){
+					           layer.msg("驳回成功！", {icon: 6, time: 1000, anim: 4}, function () {
+					               parent.layer.close(parent.layer.getFrameIndex(window.name));
+					           });
+        	            }
+        	        } ,
+        	        complete: function(xhr, textStatus) {
+        		        if(xhr.status==400){
+        		        	 layer.msg("已经审核完成！");
+        		        }
+        		    } 
+        		});
+	        });
+	        return false;
+	});
+        
+        
         form.on('submit(edit)', function (data) {
 		        	/* //例子2
 		        	layer.prompt({

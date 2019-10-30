@@ -85,28 +85,36 @@
         form.on('submit(overrule)', function (data) {
 	   		var id=data.field.merchant_id;
 	   		var str = 
-               " <textarea name='remarks' placeholder='请输入驳回意见..' class='layui-textarea'></textarea> ";
+               " <textarea name='remarks' id='remarks' placeholder='请输入驳回意见..' class='layui-textarea'></textarea> ";
 	        layer.confirm(str, {btn: ['驳回', '取消'], title: "审核驳回"}, function () {
-	            var price = $("#price").val();
-	            if (price == null || price == undefined) {
-	                layer.msg('请输入金额', {icon: 2});
+	            var remarks = $("#remarks").val();
+	            if (remarks == null || remarks == undefined || remarks=='') {
+	                layer.msg('请输入驳回意见！', {icon: 2});
 	            }
-	            var url = "${ctx }/manage/member/Back.do?museId=" + museId + "&price=" + price;
 	            $.ajax({
-	                type: "post",
-	                url: url,
-	                data: null,
-	                dataType: "json",
-	                async: false,
-	                success: function (data) {
-	                    if (data.flag == 1) {
-	                        layer.msg('操作成功', {icon: 1});
-	                        window.setTimeout("javascript:location.href='${ctx }/manage/member/toPage.do'", 2000);
-	                    } else {
-	                        layer.msg(data.msg, {icon: 2});
-	                    }
-	                }
-	            });
+        		    url:"http://39.108.15.198:3000/api/v1/certification/overrule";
+        		    type: "put",
+        	        headers:{
+        	        	"Authorization":
+        	            "Bearer " + sessionStorage.getItem("token")            	
+        	        },
+        	        data:{
+                    	"merchant_id":id,
+                    	'reason':remarks
+                    },
+                    success: function(result){
+        	            if(result.status=="ok"){
+					           layer.msg("驳回成功！", {icon: 6, time: 1000, anim: 4}, function () {
+					               parent.layer.close(parent.layer.getFrameIndex(window.name));
+					           });
+        	            }
+        	        } ,
+        	        complete: function(xhr, textStatus) {
+        		        if(xhr.status==400){
+        		        	 layer.msg("已经审核完成！");
+        		        }
+        		    } 
+        		});
 	        });
 	        return false;
 	});
