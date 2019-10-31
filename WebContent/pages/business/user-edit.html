@@ -88,11 +88,9 @@
                " <textarea name='remarks' id='remarks' placeholder='请输入驳回意见..' class='layui-textarea'></textarea> ";
 	        layer.confirm(str, {btn: ['驳回', '取消'], title: "审核驳回"}, function () {
 	            var remarks = $("#remarks").val();
-	            if (remarks == null || remarks == undefined || remarks=='') {
-	                layer.msg('请输入驳回意见！', {icon: 2});
-	            }
-	            $.ajax({
-        		    url:"http://39.108.15.198:3000/api/v1/certification/overrule";
+	            console.log(remarks);
+	           $.ajax({
+        		    url:"http://39.108.15.198:3000/api/v1/certification/overrule",
         		    type: "put",
         	        headers:{
         	        	"Authorization":
@@ -114,7 +112,7 @@
         		        	 layer.msg("已经审核完成！");
         		        }
         		    } 
-        		});
+        		}); 
 	        });
 	        return false;
 	});
