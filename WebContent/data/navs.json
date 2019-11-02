@@ -27,6 +27,13 @@
         "icon": "&#xe61c;",
         "href": "pages/user/user.html",
         "spread": true
+      },
+       {
+        "title": "会员卡列表",
+        "fontFamily": "layui-icon",
+        "icon": "&#xe61c;",
+        "href": "pages/vip/vipList.html",
+        "spread": true
       }
     ]
   },
@@ -54,6 +61,12 @@
         "title": "收款资质列表",
         "icon": "&#xe60a;",
         "href": "pages/receipts/receipts.html",
+        "spread": false
+      },
+      {
+        "title": "圈子列表",
+        "icon": "&#xe60a;",
+        "href": "pages/circle/circle.html",
         "spread": false
       }
     ]
