@@ -128,14 +128,14 @@
             var data = obj.data;
             var layEvent = obj.event;
             if (layEvent === 'edit') {
-			            	 layer.confirm('是否开启高阶权限!', {
+			            /* 	 layer.confirm('是否开启高阶权限!', {
 			                     btn: ['确定', '取消']
 			                 }, function (index, layero) {
 			                     //移除元素
 			                //     $("#tr" + id).remove();
 			                     //无法关闭这个消息框
 			                     $.ajax({
-							 		    url: "http://39.108.15.198:3000/api/v1/admin_users/official",
+							 		    url: 'http://39.108.15.198:3000/api/v1/admin_users/official',
 							 		    type: "put",
 							 	        headers:{
 							 	        	"Authorization":
@@ -144,7 +144,7 @@
 							 	        data:{id:data.id},
 							            success: function(result){
 							 	            if(result.status=="ok"){
-											           layer.msg("成功开启商家高阶权限！", {icon: 6, time: 1000, anim: 4}, function () {
+											          layer.msg("成功开启商家高阶权限！", {icon: 6, time: 1000, anim: 4}, function () {
 											        //	   	layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
 											           });
 							 	            }
@@ -157,7 +157,7 @@
 							 		    } 
 							 		}); 
 			                 }
-                   );
+                   ); */
             } else if (layEvent === 'del') {
                 layer.confirm("确定要删除吗？", {skin: 'layui-layer-lan', icon: 2, title: '提示', anim: 6}, function () {
                     layer.msg("操作成功！", {icon: 1, time: 1000});
