@@ -79,7 +79,7 @@
 
         table.render({
             elem: '#tableId',
-            url: 'http://39.108.15.198:3000/api/v1/admin_moments',
+            url: 'http://39.108.15.198:3000/api/v1/admin_moments.json',
             method:'get',
             where:{
             	'pageno':1,
@@ -99,18 +99,18 @@
             page: true,
             cols: [[
                 {type: 'checkbox'},
-                {field: 'id', title: '圈子id', width: 80, sort: true},
+                {field: 'id', title: '圈子id', width: 100, sort: true},
                 {field: 'user_id', title: '用户id', width: 100},
-                {field: 'user_name', title: '用户名字', width: 80},
+                {field: 'user_name', title: '用户名字', width: 120},
                 {field: 'content', title: '圈子内容', width: 200},
-                {field: 'title', title: '圈子标题', width: 200},
-                {field: 'created_at', title: '圈子发布时间', width: 80},
-                {field: 'location', title: '发布地点', width: 100},
+                {field: 'title', title: '圈子标题', width: 120},
+                {field: 'created_at', title: '圈子发布时间', width: 180},
+                {field: 'location', title: '发布地点', width: 120},
                 {field: 'likes', title: '点赞数', width: 80},
                 {field: 'comment_num', title: '评论数', width: 80},
                 {field: 'merchant', title: '关联商家', width: 100},
                 {field: 'status', title: '圈子状态', width: 100},
-                {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
+                {title: '操作', width: 100, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
                 $("#countNum").text(count);
