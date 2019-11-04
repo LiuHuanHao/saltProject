@@ -95,6 +95,7 @@
                  success: function(result){
      	            if(result.status=="ok"){
 					           layer.msg("修改成功！", {icon: 6, time: 1000, anim: 4}, function () {
+					               window.parent.location.reload();
 					               parent.layer.close(parent.layer.getFrameIndex(window.name));
 					           });
      	            }
