@@ -100,16 +100,16 @@
             cols: [[
                 {type: 'checkbox'},
                 {field: 'id', title: '会员卡id', width: 80, sort: true},
-                {field: 'name', title: '会员卡名字', width: 100},
-                {field: 'price', title: '会员卡价格', width: 80},
-                {field: 'card_type', title: '会员卡类型', width: 200},
-                {field: 'circulation', title: '发行数量', width: 200},
-                {field: 'total_sale', title: '售卖数量', width: 80},
-                {field: 'publisher', title: '会员卡发行人', width: 100},
-                {field: 'merchants', title: '适用商家数量', width: 80},
-                {field: 'status', title: '会员卡状态', width: 80},
+                {field: 'name', title: '会员卡名字', width: 130},
+                {field: 'price', title: '会员卡价格', width: 130},
+                {field: 'card_type', title: '会员卡类型', width: 120},
+                {field: 'circulation', title: '发行数量', width: 120},
+                {field: 'total_sale', title: '售卖数量', width: 100},
+                {field: 'publisher', title: '会员卡发行人', width: 120},
+                {field: 'merchants', title: '适用商家数量', width: 120},
+                {field: 'status', title: '会员卡状态', width: 120},
                 {field: 'permission', title: '用户权限', width: 100},
-                {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
+                {title: '操作', width: 380, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
                 $("#countNum").text(count);
@@ -124,7 +124,7 @@
         table.on('tool(tableFilter)', function (obj) {
             var data = obj.data;
             var layEvent = obj.event;
-            if (layEvent === 'edit') {
+            if (layEvent === 'details') {
             	 layer.open({
                      title: '编辑用户',
                      type: 2,
@@ -136,27 +136,41 @@
                      zIndex: layer.zIndex,
                      success: function(layero, index){
                      	var id=data.id;
-                     	var account=data.account;
-                     	var name=data.name;
-                         var body = layui.layer.getChildFrame('body', index);
-                         body.find("#id").val(id); 
-                         body.find("#account").val(account); 
-                         body.find("#name").val(name); 
+                     	if(id!=null && id!=undefined && id!=""){
+                     		$.ajax({
+                     	        url: "http://39.108.15.198:3000/api/v1/admin_membership_cards/detail?id="+id,
+                     	        type: "get",	
+                     	        headers:{
+                                 	"Authorization":
+                                     "Bearer " + sessionStorage.getItem("token")            	
+                                 },
+                     	        success: function(result){
+                     	            if(result.status=="ok"){
+ 					                        var body = layui.layer.getChildFrame('body', index);
+ 					                        body.find("#name").val(result.name); 
+ 					                        body.find("#price").val(result.price); 
+ 					                        body.find("#publisher").val(result.publisher); 
+ 					                        body.find("#account_license_url").attr("src",result.account_license_url); 
+ 					                        body.find("#health_license_url").attr("src",result.health_license_url); 
+                     	            }
+                     	        }
+                     	    });
+                     	}
                      },
                      end: function () {
                      //	window.location.reload();
                      }
                  });
-            } else if (layEvent === 'del') {
-			            	layer.confirm('是否开启高阶权限!', {
+            } else if (layEvent === 'online') {
+			            	layer.confirm('是否上架会员卡!', {
 			                    btn: ['确定', '取消']
 			                }, function (index, layero) {
 			                    //移除元素
 			               //     $("#tr" + id).remove();
 			                    //无法关闭这个消息框
 			                    $.ajax({
-							 		    url: "http://39.108.15.198:3000/api/v1/admin_users/official",
-							 		    type: "put",
+							 		    url: "http://39.108.15.198:3000/api/v1/admin_membership_cards/publish",
+							 		    type: "post",
 							 	        headers:{
 							 	        	"Authorization":
 							 	            "Bearer " + sessionStorage.getItem("token")            	
@@ -164,7 +178,7 @@
 							 	        data:{id:data.id},
 							            success: function(result){
 							 	            if(result.status=="ok"){
-											           layer.msg("成功开启商家高阶权限！", {icon: 6, time: 1000, anim: 4}, function () {
+											           layer.msg("成功上架会员卡！", {icon: 6, time: 1000, anim: 4}, function () {
 											        //	   	layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
 											           });
 							 	            }
@@ -178,7 +192,101 @@
 							 		}); 
 			                }
 			      );
-            }
+            } else if (layEvent === 'offline') {
+			            	layer.confirm('是否下架会员卡!', {
+			                    btn: ['确定', '取消']
+			                }, function (index, layero) {
+			                    //移除元素
+			               //     $("#tr" + id).remove();
+			                    //无法关闭这个消息框
+			                    $.ajax({
+							 		    url: "http://39.108.15.198:3000/api/v1/admin_membership_cards/off_card",
+							 		    type: "post",
+							 	        headers:{
+							 	        	"Authorization":
+							 	            "Bearer " + sessionStorage.getItem("token")            	
+							 	        },
+							 	        data:{id:data.id},
+							            success: function(result){
+							 	            if(result.status=="ok"){
+											           layer.msg("已下架会员卡！", {icon: 6, time: 1000, anim: 4}, function () {
+											        //	   	layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+											           });
+							 	            }
+							 	        },
+							 	        complete: function(xhr, textStatus) {
+							 		        if(xhr.status==400){
+							 		        	 layer.msg("不存在这条记录！");
+							 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+							 		        }
+							 		    } 
+							 		}); 
+			                }
+			      );
+			} else if (layEvent === 'pass') {
+		            	layer.confirm('是否通过审核!', {
+		                    btn: ['确定', '取消']
+		                }, function (index, layero) {
+		                    //移除元素
+		               //     $("#tr" + id).remove();
+		                    //无法关闭这个消息框
+		                    $.ajax({
+						 		    url: "http://39.108.15.198:3000/api/v1/admin_membership_cards/audit_ok",
+						 		    type: "post",
+						 	        headers:{
+						 	        	"Authorization":
+						 	            "Bearer " + sessionStorage.getItem("token")            	
+						 	        },
+						 	        data:{id:data.id},
+						            success: function(result){
+						 	            if(result.status=="ok"){
+										           layer.msg("会员卡审核成功！", {icon: 6, time: 1000, anim: 4}, function () {
+										        //	   	layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+										        		window.location.reload();
+										           });
+						 	            }
+						 	        },
+						 	        complete: function(xhr, textStatus) {
+						 		        if(xhr.status==400){
+						 		        	 layer.msg("不存在这条记录！");
+						 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+						 		        }
+						 		    } 
+						 		}); 
+		                }
+		      	);
+			}else if (layEvent === 'overrule') {
+							var id=data.id;
+					   		var str = 
+				               " <textarea name='remarks' id='remarks' placeholder='请输入驳回意见..' class='layui-textarea'></textarea> ";
+					        layer.confirm(str, {btn: ['驳回', '取消'], title: "审核驳回"}, function () {
+					            var remarks = $("#remarks").val();
+					            $.ajax({
+				        		    url:"http://39.108.15.198:3000/api/v1/admin_membership_cards/overrule",
+				        		    type: "post",
+				        	        headers:{
+				        	        	"Authorization":
+				        	            "Bearer " + sessionStorage.getItem("token")            	
+				        	        },
+				        	        data:{
+				                    	"id":id,
+				                    	'reason':remarks
+				                    },
+				                    success: function(result){
+				        	            if(result.status=="ok"){
+									           layer.msg("驳回成功！", {icon: 6, time: 1000, anim: 4}, function () {
+										        	   window.location.reload();
+									           });
+				        	            }
+				        	        } ,
+				        	        complete: function(xhr, textStatus) {
+				        		        if(xhr.status==400){
+				        		        	 layer.msg("已经审核完成！");
+				        		        }
+				        		    } 
+				        		});
+					        });
+				}
         });
 
         $("#batchEnabled").click(function () {
@@ -274,8 +382,31 @@
     {{ d.role == 0 ? '管理员' : '普通用户    '}}
 </script>
 <script type="text/html" id="operationTpl">
-    <a href="javascript:;" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
-    <a href="javascript:;"  title="开启高阶权限" lay-event="del"><i class="layui-icon layui-icon-upload-circle" ></i></a>
+    <a href="javascript:;" title="编辑" lay-event="details">
+		<button class="layui-btn" >
+              详情
+        </button>
+     </a>
+ 	<a href="javascript:;" title="编辑" lay-event="online">
+		<button class="layui-btn" >
+              上架
+        </button>
+     </a>
+ 	<a href="javascript:;" title="编辑" lay-event="offline">
+		<button class="layui-btn" >
+              下架
+        </button>
+     </a>
+	 <a href="javascript:;" title="编辑" lay-event="pass">
+		<button class="layui-btn" >
+              通过
+        </button>
+     </a>
+ 	<a href="javascript:;" title="编辑" lay-event="overrule">
+		<button class="layui-btn" >
+              驳回
+        </button>
+     </a>
 </script>
 </body>
 </html>
