@@ -107,7 +107,7 @@
                 {field: 'phone', title: '联系电话', width: 100},
                 {field: 'created_at', title: '创建时间', width: 180},
                 {field: 'audit_type', title: '审核类型', width: 150},
-                {field: 'audit_status', title: '审核状态', width: 150},
+                {field: 'audit_status', title: '审核状态',templet: '#statusTpl', width: 150},
                 {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
@@ -255,16 +255,25 @@
         })
     })
 </script>
-<!--模板-->
+<!--模板
 <script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="启用|停用" {{ d.status==0 ? 'checked' : ''}}>
-</script>
+</script>-->
 <script type="text/html" id="roleTpl">
     {{ d.role == 0 ? '管理员' : '普通用户    '}}
 </script>
 <script type="text/html" id="operationTpl">
     <a href="javascript:;" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
     <a href="javascript:;" title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+</script>
+<script type="text/html" id="statusTpl">
+{{# if(d.audit_status.trim() == 'pass'){ }}
+<span >通过</span>
+{{# } else if(d.audit_status.trim() == 'overrule')  { }}
+驳回
+{{# } else { }}
+未审核
+{{# } }}
 </script>
 </body>
 </html>
