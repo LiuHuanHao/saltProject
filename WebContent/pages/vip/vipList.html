@@ -107,7 +107,7 @@
                 {field: 'total_sale', title: '售卖数量', width: 100},
                 {field: 'publisher', title: '会员卡发行人', width: 120},
                 {field: 'merchants', title: '适用商家数量', width: 120},
-                {field: 'status', title: '会员卡状态', width: 120},
+                {field: 'status', title: '会员卡状态', templet: '#statusTpl', width: 120},
                 {field: 'permission', title: '用户权限', width: 100},
                 {title: '操作', width: 380, templet: '#operationTpl', align: 'center'}
             ]],
@@ -375,11 +375,27 @@
     })
 </script>
 <!--模板-->
-<script type="text/html" id="statusTpl">
-    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="启用|停用" {{ d.status==0 ? 'checked' : ''}}>
-</script>
 <script type="text/html" id="roleTpl">
     {{ d.role == 0 ? '管理员' : '普通用户    '}}
+</script>
+<script type="text/html" id="statusTpl">
+{{# if(d.status.trim() == 'draft'){ }}
+草稿
+{{# } else if(d.status.trim() == 'constructing')  { }}
+建设中
+{{# } else if(d.status.trim() == 'auditing')  { }}
+审核中
+{{# } else if(d.status.trim() == 'overrule')  { }}
+驳回
+{{# } else if(d.status.trim() == 'publishing')  { }}
+待发布
+{{# } else if(d.status.trim() == 'published')  { }}
+已发布
+{{# } else if(d.status.trim() == 'off')  { }}
+已下架
+{{# } else { }}
+已停止
+{{# } }}
 </script>
 <script type="text/html" id="operationTpl">
     <a href="javascript:;" title="编辑" lay-event="details">
