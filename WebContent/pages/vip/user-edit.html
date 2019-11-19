@@ -15,9 +15,9 @@
     <div class="ok-body-breadcrumb">
             <span class="layui-breadcrumb">
                 <a><cite>首页</cite></a>
-                <a><cite>常用页面</cite></a>
-                <a><cite>用户列表</cite></a>
-				<a><cite>编辑用户</cite></a>
+                <a><cite>会员管理</cite></a>
+                <a><cite>会员卡列表</cite></a>
+				<a><cite>会员卡详情</cite></a>
             </span>
         <a class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);" title="刷新">
             <i class="layui-icon layui-icon-refresh"></i>
@@ -26,24 +26,64 @@
         <!--form表单-->
     <form class="layui-form ok-form">
     <div class="layui-form-item">
-              <div class="layui-form-item">
-            <label class="layui-form-label">卡名</label>
-            <div class="layui-input-block">
-                <input type="text" name="name"  id="name"  placeholder="请输入联系人" autocomplete="off" class="layui-input"> <!-- lay-verify="required"  -->
+            <label class="layui-form-label">会员卡名称</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="name"  id="name" style="width:300px"  placeholder="" autocomplete="off" class="layui-input"> <!-- lay-verify="required"  -->
+            </div>
+             <label class="layui-form-label">会员卡状态</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="card_status"   style="width:300px"  id="card_status"  autocomplete="off" class="layui-input" >  
+            </div>
+             <label class="layui-form-label">卡语</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="comment"  style="width:300px"  id="comment"  autocomplete="off" class="layui-input" >
             </div>
         </div>
+        
         <div class="layui-form-item">
-            <label class="layui-form-label">价格</label>
-            <div class="layui-input-block">
-                <input type="text" name="price"  id="price"  autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
+            <label class="layui-form-label">卡说明</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="description"  id="description"  style="width:300px"  placeholder="" autocomplete="off" class="layui-input"> <!-- lay-verify="required"  -->
+            </div>
+             <label class="layui-form-label">会员卡售价</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="price"  id="price"  style="width:300px"  autocomplete="off" class="layui-input" >  
+            </div>
+             <label class="layui-form-label">会员卡消费金</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="consumer_price"  style="width:300px"  id="consumer_price"  autocomplete="off" class="layui-input" >
             </div>
         </div>
-         <div class="layui-form-item">
-            <label class="layui-form-label">发布者</label>
-            <div class="layui-input-block">
-                <input type="text" name="publisher"  id="publisher"  autocomplete="off" class="layui-input" >  <!-- lay-verify="required" -->
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否共享此会员卡</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="is_global"  id="is_global"   style="width:300px" placeholder="" autocomplete="off" class="layui-input"> <!-- lay-verify="required"  -->
+            </div>
+             <label class="layui-form-label">卡号类型</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="card_type"  id="card_type"   style="width:300px" autocomplete="off" class="layui-input" >  
+            </div>
+             <label class="layui-form-label">建卡人</label>
+            <div class="layui-input-inline" style="width:300px">
+                <input type="text" name="publisher"  id="publisher"    autocomplete="off" class="layui-input" >
             </div>
         </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">驳回理由</label>
+            <div class="layui-input-block">
+                <input type="text" name="reason" style="width:1140px"   id="reason"  placeholder="" autocomplete="off" class="layui-input"> <!-- lay-verify="required"  -->
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">卡面</label>
+            <div class="layui-input-block">
+               	<img alt="开户许可证"  src=""  height="200px" width="1140px" id="face">
+            </div>
+        </div>
+        
         
         <div class="layui-form-item">
             <div class="layui-input-block">

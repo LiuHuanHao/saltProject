@@ -148,9 +148,16 @@
                      	            if(result.status=="ok"){
  					                        var body = layui.layer.getChildFrame('body', index);
  					                        body.find("#name").val(result.name); 
- 					                        body.find("#price").val(result.price); 
- 					                        body.find("#publisher").val(result.publisher); 
- 					                        body.find("#account_license_url").attr("src",result.account_license_url); 
+ 					                        body.find("#card_status").val(result.card_status); 
+ 					                        body.find("#comment").val(result.comment); 
+ 					                       	body.find("#description").val(result.description); 
+ 					                      	body.find("#price").val(result.price); 
+ 					                    	body.find("#consumer_price").val(result.consumer_price); 
+ 					                    	body.find("#is_global").val(result.is_global); 
+ 					                   		body.find("#reason").val(result.reason); 
+ 					                  		body.find("#publisher").val(result.publisher); 
+ 					                 		body.find("#card_type").val(result.card_type); 
+ 					                        body.find("#face").attr("src",result.face); 
  					                        body.find("#health_license_url").attr("src",result.health_license_url); 
                      	            }
                      	        }
