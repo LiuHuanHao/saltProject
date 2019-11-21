@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/scroll-bar.css">
+    <link rel="stylesheet" href="../../css/sub-page.css">
+    <link rel="stylesheet" href="../../lib/nprogress/nprogress.css">
+</head>
+<body>
+<div class="ok-body">
+    <!--面包屑导航区域-->
+    <div class="ok-body-breadcrumb">
+        <span class="layui-breadcrumb">
+            <a><cite>首页</cite></a>
+            <a><cite>常用页面</cite></a>
+            <a><cite>用户列表</cite></a>
+        </span>
+        <a class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="layui-icon layui-icon-refresh"></i>
+        </a>
+    </div>
+    <!--模糊搜索区域-->
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 ok-search">
+            <input class="layui-input" placeholder="开始日期" autocomplete="off" id="startTime">
+            <input class="layui-input" placeholder="截止日期" autocomplete="off" id="endTime">
+            <input class="layui-input" placeholder="请输入用户名" autocomplete="off">
+            <button class="layui-btn" lay-submit="" lay-filter="search">
+                <i class="layui-icon layui-icon-search"></i>
+            </button>
+        </form>
+    </div>
+    <!--工具栏-->
+    <okToolbar>
+        <button class="layui-btn layui-btn-normal" id="batchEnabled">
+            <i class="iconfont icon-shangsheng"></i>批量启用
+        </button>
+        <button class="layui-btn layui-btn-warm" id="batchDisabled">
+            <i class="iconfont icon-web-icon-"></i>批量停用
+        </button>
+        <button class="layui-btn layui-btn-danger" id="batchDel">
+            <i class="layui-icon layui-icon-delete"></i>批量删除
+        </button>
+        <button class="layui-btn" id="addUser">
+            <i class="layui-icon">&#xe61f;</i>添加用户
+        </button>
+        <span>共有数据：<i id="countNum"></i> 条</span>
+    </okToolbar>
+    <!--数据表格-->
+    <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
+</div>
+<!--js逻辑-->
+<script src="../../lib/layui/layui.js"></script>
+<script src="../../lib/nprogress/nprogress.js"></script>
+<script>
+    NProgress.start();
+    window.onload = function () {
+        NProgress.done();
+    }
+    layui.use(['element', 'table', 'form', 'jquery', 'laydate'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#startTime',
+            type: "datetime"
+        });
+
+        laydate.render({
+            elem: '#endTime',
+            type: "datetime"
+        });
+
+        table.render({
+            elem: '#tableId',
+            url: 'http://39.108.15.198:3000/api/v1/admin_qualifications',
+            method:'get',
+            where:{
+            	'pageno':1,
+            	'pageszie':10
+            },
+            headers:{
+            	"Authorization":
+                "Bearer " + sessionStorage.getItem("token")            	
+            },
+            response: {
+              statusName: 'status' //规定数据状态的字段名称，默认：code
+              ,statusCode: "ok" //规定成功的状态码，默认：0
+              ,msgName: 'message' //规定状态信息的字段名称，默认：msg
+              ,countName: 'total' //规定数据总数的字段名称，默认：count
+              ,dataName: 'qualifications' //规定数据列表的字段名称，默认：data
+            } ,
+            page: true,
+            cols: [[
+                {type: 'checkbox'},
+                {field: 'id', title: '商家运营id', width: 80, sort: true},
+                {field: 'application', title: '申请者', width: 130},
+                {field: 'contact', title: '联系方式', width: 130},
+                {field: 'introduction', title: '介绍', width: 220},
+                {field: 'created_at', title: '提交时间', width: 200},
+                {field: 'status', title: '审核状态', templet: '#statusTpl',width: 100},
+                {field: 'reason', title: '驳回理由', width: 120},
+                {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
+            ]],
+            done: function (res, curr, count) {
+                $("#countNum").text(count);
+            }
+        });
+
+        form.on('submit(search)', function () {
+            layer.msg('正在查询，请稍后...');
+            return false;
+        });
+
+        table.on('tool(tableFilter)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if (layEvent === 'details') {
+            	 layer.open({
+                     title: '编辑用户',
+                     type: 2,
+                     shade: false,
+                     maxmin: true,
+                     shade: 0.5,
+                     area: ['90%', '90%'],
+                     content: 'user-edit.html',
+                     zIndex: layer.zIndex,
+                     success: function(layero, index){
+                     	var id=data.id;
+                     	if(id!=null && id!=undefined && id!=""){
+                     		$.ajax({
+                     	        url: "http://39.108.15.198:3000/api/v1/admin_membership_cards/detail?id="+id,
+                     	        type: "get",	
+                     	        headers:{
+                                 	"Authorization":
+                                     "Bearer " + sessionStorage.getItem("token")            	
+                                 },
+                     	        success: function(result){
+                     	            if(result.status=="ok"){
+ 					                        var body = layui.layer.getChildFrame('body', index);
+ 					                        body.find("#name").val(result.name); 
+ 					                        body.find("#card_status").val(result.card_status); 
+ 					                        body.find("#comment").val(result.comment); 
+ 					                       	body.find("#description").val(result.description); 
+ 					                      	body.find("#price").val(result.price); 
+ 					                    	body.find("#consumer_price").val(result.consumer_price); 
+ 					                    	body.find("#is_global").val(result.is_global); 
+ 					                   		body.find("#reason").val(result.reason); 
+ 					                  		body.find("#publisher").val(result.publisher); 
+ 					                 		body.find("#card_type").val(result.card_type); 
+ 					                        body.find("#face").attr("src",result.face); 
+ 					                        body.find("#health_license_url").attr("src",result.health_license_url); 
+                     	            }
+                     	        }
+                     	    });
+                     	}
+                     },
+                     end: function () {
+                     //	window.location.reload();
+                     }
+                 });
+            } else if (layEvent === 'online') {
+			            	layer.confirm('是否上架会员卡!', {
+			                    btn: ['确定', '取消']
+			                }, function (index, layero) {
+			                    //移除元素
+			               //     $("#tr" + id).remove();
+			                    //无法关闭这个消息框
+			                    $.ajax({
+							 		    url: "http://39.108.15.198:3000/api/v1/admin_membership_cards/publish",
+							 		    type: "post",
+							 	        headers:{
+							 	        	"Authorization":
+							 	            "Bearer " + sessionStorage.getItem("token")            	
+							 	        },
+							 	        data:{id:data.id},
+							            success: function(result){
+							 	            if(result.status=="ok"){
+											           layer.msg("成功上架会员卡！", {icon: 6, time: 1000, anim: 4}, function () {
+											        //	   	layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+											           });
+							 	            }
+							 	        },
+							 	        complete: function(xhr, textStatus) {
+							 		        if(xhr.status==400){
+							 		        	 layer.msg("不存在这条记录！");
+							 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+							 		        }
+							 		    } 
+							 		}); 
+			                }
+			      );
+            } else if (layEvent === 'offline') {
+			            	layer.confirm('是否下架会员卡!', {
+			                    btn: ['确定', '取消']
+			                }, function (index, layero) {
+			                    //移除元素
+			               //     $("#tr" + id).remove();
+			                    //无法关闭这个消息框
+			                    $.ajax({
+							 		    url: "http://39.108.15.198:3000/api/v1/admin_membership_cards/off_card",
+							 		    type: "post",
+							 	        headers:{
+							 	        	"Authorization":
+							 	            "Bearer " + sessionStorage.getItem("token")            	
+							 	        },
+							 	        data:{id:data.id},
+							            success: function(result){
+							 	            if(result.status=="ok"){
+											           layer.msg("已下架会员卡！", {icon: 6, time: 1000, anim: 4}, function () {
+											        //	   	layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+											           });
+							 	            }
+							 	        },
+							 	        complete: function(xhr, textStatus) {
+							 		        if(xhr.status==400){
+							 		        	 layer.msg("不存在这条记录！");
+							 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+							 		        }
+							 		    } 
+							 		}); 
+			                }
+			      );
+			} else if (layEvent === 'pass') {
+		            	layer.confirm('是否通过审核!', {
+		                    btn: ['确定', '取消']
+		                }, function (index, layero) {
+		                    //移除元素
+		               //     $("#tr" + id).remove();
+		                    //无法关闭这个消息框
+		                    $.ajax({
+						 		    url: "http://39.108.15.198:3000/api/v1/admin_qualifications/pass?id="+data.id,
+						 		    type: "put",
+						 	        headers:{
+						 	        	"Authorization":
+						 	            "Bearer " + sessionStorage.getItem("token")            	
+						 	        },
+						            success: function(result){
+						 	            if(result.status=="ok"){
+										           layer.msg("多商家运营审核成功！", {icon: 6, time: 1000, anim: 4}, function () {
+										        //	   	layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+										        		window.location.reload();
+										           });
+						 	            }
+						 	        },
+						 	        complete: function(xhr, textStatus) {
+						 		        if(xhr.status==400){
+						 		        	 layer.msg("不存在这条记录！");
+						 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
+						 		        }
+						 		    } 
+						 		}); 
+		                }
+		      	);
+			}else if (layEvent === 'overrule') {
+							var id=data.id;
+					   		var str = 
+				               " <textarea name='remarks' id='remarks' value='资质不合格' placeholder='请输入驳回意见..' class='layui-textarea'></textarea> ";
+					        layer.confirm(str, {btn: ['驳回', '取消'], title: "审核驳回"}, function () {
+					            var remarks = $("#remarks").val();
+					            $.ajax({
+				        		    url:"http://39.108.15.198:3000/api/v1/admin_qualifications/overrule?id="+id+"&reason="+remarks,
+				        		    type: "put",
+				        	        headers:{
+				        	        	"Authorization":
+				        	            "Bearer " + sessionStorage.getItem("token")            	
+				        	        },
+				                    success: function(result){
+				        	            if(result.status=="ok"){
+									           layer.msg("驳回成功！", {icon: 6, time: 1000, anim: 4}, function () {
+										        	   window.location.reload();
+									           });
+				        	            }
+				        	        } ,
+				        	        complete: function(xhr, textStatus) {
+				        		        if(xhr.status==400){
+				        		        	 layer.msg("已经审核完成！");
+				        		        }
+				        		    } 
+				        		});
+					        });
+				}
+        });
+
+        $("#batchEnabled").click(function () {
+            layer.confirm("确定要批量启用吗？", {skin: 'layui-layer-lan', icon: 3, title: '提示', anim: 1}, function () {
+                var checkStatus = table.checkStatus('tableId');
+                var rows = checkStatus.data.length;
+                if (rows > 0) {
+                    var idsStr = "";
+                    for (var i = 0; i < checkStatus.data.length; i++) {
+                        idsStr += checkStatus.data[i].id + ',';
+                    }
+                    console.log("选择的id-->" + idsStr);
+                    layer.msg("操作成功！", {icon: 1, time: 1000}, function () {
+                        $(".layui-laypage-btn")[0].click();
+                    });
+                } else {
+                    layer.msg('未选择有效数据', {
+                        offset: 't',
+                        anim: 6
+                    });
+                }
+            });
+        })
+
+        $("#batchDisabled").click(function () {
+            layer.confirm("确定要批量停用吗？", {skin: 'layui-layer-lan', icon: 3, title: '提示', anim: 2}, function () {
+                var checkStatus = table.checkStatus('tableId');
+                var rows = checkStatus.data.length;
+                if (rows > 0) {
+                    var idsStr = "";
+                    for (var i = 0; i < checkStatus.data.length; i++) {
+                        idsStr += checkStatus.data[i].id + ',';
+                    }
+                    console.log("选择的id-->" + idsStr);
+                    layer.msg("操作成功！", {icon: 1, time: 1000}, function () {
+                        $(".layui-laypage-btn")[0].click();
+                    });
+                } else {
+                    layer.msg('未选择有效数据', {
+                        offset: 't',
+                        anim: 6
+                    });
+                }
+            });
+        })
+
+        $("#batchDel").click(function () {
+            layer.confirm("确定要批量删除吗？", {skin: 'layui-layer-lan', icon: 2, title: '提示', anim: 6}, function () {
+                var checkStatus = table.checkStatus('tableId');
+                var rows = checkStatus.data.length;
+                if (rows > 0) {
+                    var idsStr = "";
+                    for (var i = 0; i < checkStatus.data.length; i++) {
+                        idsStr += checkStatus.data[i].id + ',';
+                    }
+                    console.log("选择的id-->" + idsStr);
+                    layer.msg("操作成功！", {icon: 1, time: 1000}, function () {
+                        $(".layui-laypage-btn")[0].click();
+                    });
+                } else {
+                    layer.msg('未选择有效数据', {
+                        offset: 't',
+                        anim: 6
+                    });
+                }
+            });
+        })
+
+        $("#addUser").click(function () {
+            layer.open({
+                title: '添加用户',
+                type: 2,
+                shade: false,
+                maxmin: true,
+                shade: 0.5,
+                anim: 4,
+                area: ['90%', '90%'],
+                content: 'user-add.html',
+                zIndex: layer.zIndex,
+                // skin: 'layui-layer-molv',
+                end: function () {
+                    $(".layui-laypage-btn")[0].click();
+                }
+            });
+        })
+    })
+</script>
+<!--模板-->
+<script type="text/html" id="roleTpl">
+    {{ d.role == 0 ? '管理员' : '普通用户    '}}
+</script>
+
+<script type="text/html" id="statusTpl">
+{{# if(d.status.trim() == 'pass'){ }}
+<span >通过</span>
+{{# } else if(d.status.trim() == 'overrule')  { }}
+驳回
+{{# } else { }}
+未审核
+{{# } }}
+</script>
+<!-- <button class="layui-btn" >
+              详情
+        </button>
+     </a>
+ 	<a href="javascript:;" title="编辑" lay-event="online">
+		<button class="layui-btn" >
+              上架
+        </button>
+     </a>
+ 	<a href="javascript:;" title="编辑" lay-event="offline">
+		<button class="layui-btn" >
+              下架
+        </button>
+     </a> -->
+<script type="text/html" id="operationTpl">
+    <a href="javascript:;" title="编辑" lay-event="details">
+	 <a href="javascript:;" title="编辑" lay-event="pass">
+		<button class="layui-btn" >
+              通过
+        </button>
+     </a>
+ 	<a href="javascript:;" title="编辑" lay-event="overrule">
+		<button class="layui-btn" >
+              驳回
+        </button>
+     </a>
+</script>
+</body>
+</html>

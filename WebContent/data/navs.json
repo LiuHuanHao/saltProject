@@ -74,6 +74,12 @@
         "icon": "&#xe60a;",
         "href": "pages/feedback/feedback.html",
         "spread": false
+      },
+      {
+        "title": "多商家运营列表",
+        "icon": "&#xe60a;",
+        "href": "pages/operation/operations.html",
+        "spread": false
       }
     ]
   }
