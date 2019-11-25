@@ -159,7 +159,17 @@
  					                  		body.find("#publisher").val(result.publisher); 
  					                 		body.find("#card_type").val(result.card_type); 
  					                        body.find("#face").attr("src",result.face); 
- 					                        body.find("#health_license_url").attr("src",result.health_license_url); 
+ 					                        for(var i=0;i<result.merchants.length;i++){
+ 					                        	var merchant=result.merchants[i];
+	 					                       body.find("#collapse").append("<div class='layui-colla-item'>"+
+					   "<h2 class='layui-colla-title'><label class='layui-form-label'>商家id：</label>"+
+					       "     <div class='layui-input-inline' style='width:200px'>"+
+					           "     <label class='layui-form-label'>"+merchant.id+"</label> </div> <label class='layui-form-label'>名称</label>"+
+					            "<div class='layui-input-inline' style='width:200px'><label class='layui-form-label'>"+merchant.name+"</label></div>"+
+					            " <label class='layui-form-label'>logo</label> <div class='layui-input-inline' style='width:300px;'>"+
+					               "<img alt='开户许可证'  src='"+merchant.logo+"'   width='200px' height='40px' id='face'' </div></h2>"+
+					   "<div class='layui-colla-content' style='display:block'>内容区域</div></div>"); 
+ 					                        }
                      	            }
                      	        }
                      	    });
