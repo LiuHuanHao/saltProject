@@ -152,30 +152,6 @@ layui.config({
     var $ = layui.jquery;
 	var layer=layui.layer;
     $(function() {// 初始化内容
-    	function doAjax(){
-    		$.ajax({
-    		    url: "http://39.108.15.198:3000/api/v1/admins",
-    		    type: "get",
-    	        headers:{
-    	        	"Authorization":
-    	            "Bearer " + sessionStorage.getItem("token")            	
-    	        },
-    		    complete: function(xhr, textStatus) {
-    		    	console.log(sessionStorage.getItem("token")    )
-    		        console.log("xhr.status:"+xhr.status);
-    		        if(xhr.status==401){
-    		        	console.log("401");
-    		        	layer.msg("登陆失效!正在跳转到登陆页面.....");
-    		        	setTimeout(
-    		        		function(){
-		    		        	window.location = "pages/login.html";
-    		        		},2000	
-    		        	)
-    		        }
-    		    } 
-    		});
-    	}
-    	setInterval(doAjax,10000);
     	$("#userName").html(sessionStorage.getItem("loginName"));
     	$("#personName").html(sessionStorage.getItem("loginName"));
     	/* var pathName = document.location.pathname;

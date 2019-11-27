@@ -56,6 +56,8 @@
 <script src="../../lib/layui/layui.js"></script>
 <script src="../../lib/nprogress/nprogress.js"></script>
 <script>
+
+
     NProgress.start();
     window.onload = function () {
         NProgress.done();
@@ -66,6 +68,28 @@
         var form = layui.form;
         var $ = layui.jquery;
         var laydate = layui.laydate;
+        function doAjax(){
+        	$.ajax({
+        	    url: "http://39.108.15.198:3000/api/v1/admins",
+        	    type: "get",
+                headers:{
+                	"Authorization":
+                    "Bearer " + sessionStorage.getItem("token")            	
+                },
+        	    complete: function(xhr, textStatus) {
+        	    	console.log(sessionStorage.getItem("token")    )
+        	        console.log("xhr.status:"+xhr.status);
+        	        if(xhr.status==401){
+        	        	layer.msg("登陆失效!正在跳转到登陆页面.....");
+        	        	setTimeout(
+        	        		function(){
+        	        			parent.window.location = "../../pages/login.html";
+        	        		},2000	
+        	        	)
+        	        }
+        	    } 
+        	});
+        }
 
         laydate.render({
             elem: '#startTime',
@@ -109,6 +133,7 @@
             ]],
             done: function (res, curr, count) {
                 $("#countNum").text(count);
+                doAjax();
             }
         });
 

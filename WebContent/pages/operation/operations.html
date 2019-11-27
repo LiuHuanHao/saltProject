@@ -110,6 +110,26 @@
             ]],
             done: function (res, curr, count) {
                 $("#countNum").text(count);
+                $.ajax({
+             	    url: "http://39.108.15.198:3000/api/v1/certification",
+             	    type: "get",
+                     headers:{
+                     	"Authorization":
+                         "Bearer " + sessionStorage.getItem("token")            	
+                     },
+             	    complete: function(xhr, textStatus) {
+             	    	console.log(sessionStorage.getItem("token")    )
+             	        console.log("xhr.status:"+xhr.status);
+             	        if(xhr.status==401){
+             	        	layer.msg("登陆失效!正在跳转到登陆页面.....");
+             	        	setTimeout(
+             	        		function(){
+             	        			parent.window.location = "../../pages/login.html";
+             	        		},2000	
+             	        	)
+             	        }
+             	    } 
+             	});
             }
         });
 
@@ -157,7 +177,19 @@
  					                        body.find("#face").attr("src",result.face); 
  					                        body.find("#health_license_url").attr("src",result.health_license_url); 
                      	            }
-                     	        }
+                     	        },
+                     	       complete: function(xhr, textStatus) {
+                        	    	console.log(sessionStorage.getItem("token")    )
+                        	        console.log("xhr.status:"+xhr.status);
+                        	        if(xhr.status==401){
+                        	        	layer.msg("登陆失效!正在跳转到登陆页面.....");
+                        	        	setTimeout(
+                        	        		function(){
+                        	        			parent.window.location = "../../pages/login.html";
+                        	        		},2000	
+                        	        	)
+                        	        }
+                        	    } 
                      	    });
                      	}
                      },
@@ -191,7 +223,14 @@
 							 		        if(xhr.status==400){
 							 		        	 layer.msg("不存在这条记录！");
 							 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
-							 		        }
+							 		        }else if(xhr.status==401){
+		                        	        	layer.msg("登陆失效!正在跳转到登陆页面.....");
+		                        	        	setTimeout(
+		                        	        		function(){
+		                        	        			parent.window.location = "../../pages/login.html";
+		                        	        		},2000	
+		                        	        	)
+		                        	        }
 							 		    } 
 							 		}); 
 			                }
@@ -222,7 +261,14 @@
 							 		        if(xhr.status==400){
 							 		        	 layer.msg("不存在这条记录！");
 							 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
-							 		        }
+							 		        }else if(xhr.status==401){
+		                        	        	layer.msg("登陆失效!正在跳转到登陆页面.....");
+		                        	        	setTimeout(
+		                        	        		function(){
+		                        	        			parent.window.location = "../../pages/login.html";
+		                        	        		},2000	
+		                        	        	)
+		                        	        }
 							 		    } 
 							 		}); 
 			                }
@@ -253,7 +299,14 @@
 						 		        if(xhr.status==400){
 						 		        	 layer.msg("不存在这条记录！");
 						 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
-						 		        }
+						 		        }else if(xhr.status==401){
+	                        	        	layer.msg("登陆失效!正在跳转到登陆页面.....");
+	                        	        	setTimeout(
+	                        	        		function(){
+	                        	        			parent.window.location = "../../pages/login.html";
+	                        	        		},2000	
+	                        	        	)
+	                        	        }
 						 		    } 
 						 		}); 
 		                }
@@ -281,7 +334,14 @@
 				        	        complete: function(xhr, textStatus) {
 				        		        if(xhr.status==400){
 				        		        	 layer.msg("已经审核完成！");
-				        		        }
+				        		        }else if(xhr.status==401){
+	                        	        	layer.msg("登陆失效!正在跳转到登陆页面.....");
+	                        	        	setTimeout(
+	                        	        		function(){
+	                        	        			parent.window.location = "../../pages/login.html";
+	                        	        		},2000	
+	                        	        	)
+	                        	        }
 				        		    } 
 				        		});
 					        });

@@ -174,7 +174,14 @@
 							 		        if(xhr.status==400){
 							 		        	 layer.msg("不存在这条记录！");
 							 		        	// layer.closeAll('dialog');  //加入这个信息点击确定 会关闭这个消息框
-							 		        }
+							 		        }else if(xhr.status==401){
+		                         	        	layer.msg("登陆失效!正在跳转到登陆页面.....");
+		                         	        	setTimeout(
+		                         	        		function(){
+		                         	        			parent.window.location = "../../pages/login.html";
+		                         	        		},2000	
+		                         	        	)
+		                         	        }
 							 		    } 
 							 		}); 
 			                }
