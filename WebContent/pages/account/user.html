@@ -61,6 +61,22 @@
     NProgress.start();
     window.onload = function () {
         NProgress.done();
+        debugger;	
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://39.108.15.198:3000/api/v1/admins", true);
+        xmlhttp.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("token")); // 可以定义请求头带给后端
+        // readyState == 4 为请求完成，status == 200为请求陈宫返回的状态
+        xmlhttp.onreadystatechange = function(){
+        	console.log(xmlhttp.status)
+            if( xmlhttp.status == 401){
+            	setTimeout(
+    	        		function(){
+    	        			parent.window.location = "../../pages/login.html";
+    	        		},1000	
+    	        	)
+            }
+        }
+        xmlhttp.send();
     }
     layui.use(['element', 'table', 'form', 'jquery', 'laydate'], function () {
         var element = layui.element;
