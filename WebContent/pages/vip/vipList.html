@@ -96,10 +96,10 @@
             elem: '#tableId',
             url: 'http://39.108.15.198:3000/api/v1/admin_membership_cards',
             method:'get',
-            where:{
-            	'pageno':1,
-            	'pageszie':10
-            },
+            request: {
+                pageName: 'pageno' //页码的参数名称，默认：page
+                ,limitName: 'pagesize' //每页数据量的参数名，默认：limit
+             },
             headers:{
             	"Authorization":
                 "Bearer " + sessionStorage.getItem("token")            	
