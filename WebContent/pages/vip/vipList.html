@@ -193,16 +193,22 @@
  					                  		body.find("#publisher").val(result.publisher); 
  					                 		body.find("#card_type").val(result.card_type); 
  					                        body.find("#face").attr("src",result.face); 
- 					                        for(var i=0;i<result.merchants.length;i++){
- 					                        	var merchant=result.merchants[i];
-	 					                       body.find("#collapse").append("<div class='layui-colla-item'>"+
-					   "<h2 class='layui-colla-title'><label class='layui-form-label'>商家id：</label>"+
-					       "     <div class='layui-input-inline' style='width:200px'>"+
-					           "     <label class='layui-form-label'>"+merchant.id+"</label> </div> <label class='layui-form-label'>名称</label>"+
-					            "<div class='layui-input-inline' style='width:200px'><label class='layui-form-label'>"+merchant.name+"</label></div>"+
-					            " <label class='layui-form-label'>logo</label> <div class='layui-input-inline' style='width:300px;'>"+
-					               "<img alt='开户许可证'  src='"+merchant.logo+"'   width='200px' height='40px' id='face'' </div></h2>"+
-					   "<div class='layui-colla-content' style='display:block'>内容区域</div></div>"); 
+ 					                        for(var i=0;i<result.coupon_packages.length;i++){
+ 					                        		var cardPackage=result.coupon_packages[i];
+ 												  	var html="<tr><td colspan='5' align='center'>"+cardPackage.name+"</td></tr>"
+ 					                        		for(var j=0;j<cardPackage.coupons.length;j++){
+ 					                        			var obj=cardPackage.coupons[j];
+			 					                       html=html+" <tr><td>"+obj.name+"</td><td>"+obj.number+"</td>"+
+			 					                       "<td>"+obj.item_value+"</td>"+
+			 											     " <td>"+obj.item_times+"</td><td>"+obj.value+"</td></tr>"; 
+	 					                          	}
+                     								 body.find("#packges").append(html)
+ 					                        }
+ 					                        
+ 					                       for(var k=0;k<result.merchants.length;k++){
+					                        	var merchant=result.merchants[k];
+	 					                       body.find("#vendors").append(" <tr><td>"+merchant.id+"</td><td>"+merchant.name+"</td>"+
+	 					                       "<td><img src="+merchant.logo+"   width='800px' height='50px' ></td></tr>"); 
  					                        }
                      	            }
                      	        },
