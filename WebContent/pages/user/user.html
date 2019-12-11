@@ -36,13 +36,10 @@
             <i class="layui-icon">&#xe61f;</i>添加用户
         </button>
         <div class="layui-input-inline" >
-    		<input class="layui-input" style="width:120px" placeholder="开始日期" autocomplete="off" id="startTime">
+    		<input class="layui-input" style="width:120px" placeholder="创建日期"  autocomplete="off" id="created_at">
             </div>
             <div class="layui-input-inline" >
-            <input class="layui-input"  style="width:120px" placeholder="截止日期" autocomplete="off" id="endTime">
-            </div>
-            <div class="layui-input-inline" >
-            <input class="layui-input"  style="width:120px" placeholder="请输入用户名" autocomplete="off">
+            <input class="layui-input"  style="width:120px" id="content" placeholder="请输入用户名" autocomplete="off">
             </div>
              <button class="layui-btn" lay-submit="" lay-filter="search">
                 <i class="layui-icon layui-icon-search"></i>
@@ -50,7 +47,7 @@
         <span>共有数据：<i id="countNum"></i> 条</span>
     </okToolbar>
     <!--数据表格-->
-    <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
+    <table class="layui-hide" id="tableId"  lay-data="{id: 'tableId'}"  lay-filter="tableFilter"></table>
 </div>
 <!--js逻辑-->
 <script src="../../lib/layui/layui.js"></script>
@@ -80,10 +77,10 @@
         var form = layui.form;
         var $ = layui.jquery;
         var laydate = layui.laydate;
-
+        var content= $("#content").val();
         laydate.render({
-            elem: '#startTime',
-            type: "datetime"
+            elem: '#created_at',
+            type: "date"
         });
 
         laydate.render({
@@ -132,8 +129,15 @@
         });
 
         form.on('submit(search)', function () {
-            layer.msg('正在查询，请稍后...');
-            return false;
+        	var content= $("#content").val();
+        	var created_at= $("#created_at").val();
+        	var urlStr='http://39.108.15.198:3000/api/v1/admin_users?content='+content+'&created_at='+created_at;
+        	if(created_at==""){
+        		urlStr='http://39.108.15.198:3000/api/v1/admin_users?content='+content;
+        	}
+        	table.reload('tableId', {
+        		  url: urlStr
+        	});
         });
 
         table.on('tool(tableFilter)', function (obj) {
