@@ -56,6 +56,14 @@
         "icon": "&#xe61c;",
         "href": "pages/vendor/vendor.html",
         "spread": true
+      }
+      ,
+      {
+         "title": "最高阶商家列表",
+        "fontFamily": "layui-icon",
+        "icon": "&#xe61c;",
+        "href": "pages/vendor/highestVendor.html",
+        "spread": true
       },
       {
         "title": "收款资质列表",
