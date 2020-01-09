@@ -161,12 +161,19 @@
                     	        success: function(result){
                     	            if(result.status=="ok"){
 					                        var body = layui.layer.getChildFrame('body', index);
-					                        body.find("#price").val(result.price); 
-					                        body.find("#name").attr("src",result.name); 
-					                        body.find("#publisher").val(result.publisher); 
+					                        body.find("#contact_name").val(result.contact_name); 
+					                        body.find("#contact_phone").val(result.contact_phone); 
+					                        if(result.merchant_status=='pass'){
+					                        	body.find("#merchant_status").val('通过'); 
+					                        }else if(result.merchant_status=='overrule'){
+					                        	body.find("#merchant_status").val('驳回'); 
+					                        }else{
+					                        	body.find("#merchant_status").val('未审核'); 
+					                        }
+					                        body.find("#reason").val(result.reason); 
 					                        body.find("#account_license_url").attr("src",result.account_license_url); 
 					                        body.find("#health_license_url").attr("src",result.health_license_url); 
-					                        body.find("#merchant_id").val(merchant_id); 
+					                        body.find("#business_license_url").attr("src",result.business_license_url); 
                     	            }
                     	        },
                     	        complete: function(xhr, textStatus) {
