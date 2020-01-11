@@ -15,15 +15,15 @@
     <div class="ok-body-breadcrumb">
         <span class="layui-breadcrumb">
             <a><cite>首页</cite></a>
-            <a><cite>常用页面</cite></a>
-            <a><cite>用户列表</cite></a>
+            <a><cite>会员管理</cite></a>
+            <a><cite>账户列表</cite></a>
         </span>
         <a class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);" title="刷新">
             <i class="layui-icon layui-icon-refresh"></i>
         </a>
     </div>
-   <okToolbar>
-        <button class="layui-btn layui-btn-normal" id="batchEnabled">
+    <!--  <okToolbar>
+      <button class="layui-btn layui-btn-normal" id="batchEnabled">
             <i class="iconfont icon-shangsheng"></i>批量启用
         </button>
         <button class="layui-btn layui-btn-warm" id="batchDisabled">
@@ -46,9 +46,9 @@
             </div>
              <button class="layui-btn" lay-submit="" lay-filter="search">
                 <i class="layui-icon layui-icon-search"></i>
-            </button>
+            </button> 
         <span>共有数据：<i id="countNum"></i> 条</span>
-    </okToolbar>
+    </okToolbar>-->
     <!--数据表格-->
     <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
 </div>
@@ -116,11 +116,11 @@
             cols: [[
                 {type: 'checkbox'},
                 {field: 'id', title: 'ID', width: 80, sort: true},
-                {field: 'account', title: '用户名', width: 100},
-                {field: 'name', title: '姓名', width: 150},
+                {field: 'account', title: '用户名', width: 200},
+                {field: 'name', title: '姓名', width: 200},
                 {field: 'staus', title: '状态', width: 70, templet: '#statusTpl'},
-                {field: 'ip', title: 'IP', width: 160},
-                {field: 'login_time', title: '登陆时间', width: 180},
+                {field: 'ip', title: 'IP', width: 230},
+                {field: 'login_time', title: '登陆时间', width: 230},
                 {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {

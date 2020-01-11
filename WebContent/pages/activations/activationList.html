@@ -15,8 +15,8 @@
     <div class="ok-body-breadcrumb">
         <span class="layui-breadcrumb">
             <a><cite>首页</cite></a>
-            <a><cite>常用页面</cite></a>
-            <a><cite>用户列表</cite></a>
+            <a><cite>会员管理</cite></a>
+            <a><cite>后台兑换码列表</cite></a>
         </span>
         <a class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);" title="刷新">
             <i class="layui-icon layui-icon-refresh"></i>
@@ -102,17 +102,16 @@
                 {type: 'checkbox'},
                 {field: 'card_id', title: '会员卡ID', width: 80, sort: true},
                 {field: 'id', title: '序列号', width: 80},
-                {field: 'code', title: '兑换码', width: 120},
+                {field: 'code', title: '兑换码', width: 180},
                 {field: 'card_type', title: '会员卡种', width: 80},
-                {field: 'card_name', title: '会员卡名称', width: 100},
+                {field: 'card_name', title: '会员卡名称', width: 140},
                 {field: 'created_at', title: '创建时间', width: 180},
-                {field: 'used_time', title: '兑换时间', width: 120},
+                {field: 'used_time', title: '兑换时间', width: 180},
                 {field: 'user_id', title: '用户id', width: 100},
                 {field: 'publish_merchant_id', title: '发行方id', width: 80},
                 {field: 'merchant_id', title: '商家id', width: 80},
                 {field: 'sale_id', title: '销售用户id', width: 100},
                 {field: 'status', title: '当前状态', width: 100,templet: '#statusTpl'},
-                {title: '操作', width: 200, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
                 $("#countNum").text(count);

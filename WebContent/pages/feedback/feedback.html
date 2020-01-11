@@ -14,41 +14,14 @@
     <!--面包屑导航区域-->
     <div class="ok-body-breadcrumb">
         <span class="layui-breadcrumb">
-            <a><cite>首页</cite></a>
-            <a><cite>常用页面</cite></a>
-            <a><cite>用户列表</cite></a>
+           <a><cite>首页</cite></a>
+            <a><cite>商户管理</cite></a>
+            <a><cite>反馈列表</cite></a>
         </span>
         <a class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);" title="刷新">
             <i class="layui-icon layui-icon-refresh"></i>
         </a>
     </div>
-    <okToolbar>
-        <button class="layui-btn layui-btn-normal" id="batchEnabled">
-            <i class="iconfont icon-shangsheng"></i>批量启用
-        </button>
-        <button class="layui-btn layui-btn-warm" id="batchDisabled">
-            <i class="iconfont icon-web-icon-"></i>批量停用
-        </button>
-        <button class="layui-btn layui-btn-danger" id="batchDel">
-            <i class="layui-icon layui-icon-delete"></i>批量删除
-        </button>
-        <button class="layui-btn" id="addUser">
-            <i class="layui-icon">&#xe61f;</i>添加用户
-        </button>
-        <div class="layui-input-inline" >
-    		<input class="layui-input" style="width:120px" placeholder="开始日期" autocomplete="off" id="startTime">
-            </div>
-            <div class="layui-input-inline" >
-            <input class="layui-input"  style="width:120px" placeholder="截止日期" autocomplete="off" id="endTime">
-            </div>
-            <div class="layui-input-inline" >
-            <input class="layui-input"  style="width:120px" placeholder="请输入用户名" autocomplete="off">
-            </div>
-             <button class="layui-btn" lay-submit="" lay-filter="search">
-                <i class="layui-icon layui-icon-search"></i>
-            </button>
-        <span>共有数据：<i id="countNum"></i> 条</span>
-    </okToolbar>
     <!--数据表格-->
     <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
 </div>
@@ -115,10 +88,9 @@
                 {type: 'checkbox'},
                 {field: 'id', title: '反馈id', width: 100, sort: true},
                 {field: 'name', title: '昵称', width: 130},
-                {field: 'comment', title: '内容', width: 130},
+                {field: 'comment', title: '内容', width: 330},
                 {field: 'phone', title: '联系方式', width: 180},
-                {field: 'created_at', title: '时间', width: 180},
-                {title: '操作', width: 180, templet: '#operationTpl', align: 'center'}
+                {field: 'created_at', title: '时间', width: 220},
             ]],
             done: function (res, curr, count) {
                 $("#countNum").text(count);

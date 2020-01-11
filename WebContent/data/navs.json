@@ -1,14 +1,5 @@
 [
   {
-    "title": "主页",
-    "fontFamily": "ok-icon",
-    "icon": "&#xe901;",
-    "href": "pages/home.html",
-    "isClose": true,
-    "spread": true,
-    "isCheck": true
-  },
-  {
     "title": "会员管理",
     "icon": "&#xe66f;",
     "href": "",

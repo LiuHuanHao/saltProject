@@ -15,41 +15,13 @@
     <div class="ok-body-breadcrumb">
         <span class="layui-breadcrumb">
             <a><cite>首页</cite></a>
-            <a><cite>常用页面</cite></a>
-            <a><cite>用户列表</cite></a>
+            <a><cite>会员管理</cite></a>
+            <a><cite>会员卡列表</cite></a>
         </span>
         <a class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);" title="刷新">
             <i class="layui-icon layui-icon-refresh"></i>
         </a>
     </div>
-    <!--工具栏-->
-    <okToolbar>
-        <button class="layui-btn layui-btn-normal" id="batchEnabled">
-            <i class="iconfont icon-shangsheng"></i>批量启用
-        </button>
-        <button class="layui-btn layui-btn-warm" id="batchDisabled">
-            <i class="iconfont icon-web-icon-"></i>批量停用
-        </button>
-        <button class="layui-btn layui-btn-danger" id="batchDel">
-            <i class="layui-icon layui-icon-delete"></i>批量删除
-        </button>
-        <button class="layui-btn" id="addUser">
-            <i class="layui-icon">&#xe61f;</i>添加用户
-        </button>
-        <div class="layui-input-inline" >
-    		<input class="layui-input" style="width:120px" placeholder="开始日期" autocomplete="off" id="startTime">
-            </div>
-            <div class="layui-input-inline" >
-            <input class="layui-input"  style="width:120px" placeholder="截止日期" autocomplete="off" id="endTime">
-            </div>
-            <div class="layui-input-inline" >
-            <input class="layui-input"  style="width:120px" placeholder="请输入用户名" autocomplete="off">
-            </div>
-             <button class="layui-btn" lay-submit="" lay-filter="search">
-                <i class="layui-icon layui-icon-search"></i>
-            </button>
-        <span>共有数据：<i id="countNum"></i> 条</span>
-    </okToolbar>
     <!--数据表格-->
     <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
 </div>
@@ -121,9 +93,8 @@
                 {field: 'circulation', title: '发行数量', width: 120},
                 {field: 'total_sale', title: '售卖数量', width: 100},
                 {field: 'publisher', title: '会员卡发行人', width: 120},
-                {field: 'merchants', title: '适用商家数量', width: 120},
+                {field: 'merchants', title: '适用商家数量', width: 100},
                 {field: 'status', title: '会员卡状态', templet: '#statusTpl', width: 120},
-                {field: 'permission', title: '用户权限', width: 100},
                 {title: '操作', width: 380, templet: '#operationTpl', align: 'center'}
             ]],
             done: function (res, curr, count) {
