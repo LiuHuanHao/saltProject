@@ -32,6 +32,13 @@
         "icon": "&#xe61c;",
         "href": "pages/activations/activationList.html",
         "spread": true
+      },
+       {
+        "title": "后台兑换码订单列表",
+        "fontFamily": "layui-icon",
+        "icon": "&#xe61c;",
+        "href": "pages/activations/orderList.html",
+        "spread": true
       }
     ]
   },
